@@ -9,7 +9,7 @@ var products = [];
 class ProductsApis {
   const ProductsApis();
   Future<List<Map<String, dynamic>>> getAllProducts() async {
-    const url = domain + "/products/all";
+    const url = "$domain/products/all";
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -25,7 +25,7 @@ class ProductsApis {
       print(products);
       return products;
     } else {
-      throw Exception("Error occured while trying to fetch");
+      throw Exception("Error occurred while trying to fetch");
     }
   }
 }
