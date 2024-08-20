@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_app/apis/apis.dart';
+import 'package:test_app/apis/authenticationapis/login_apis.dart';
+import 'package:test_app/apis/products/productapis.dart';
 import 'package:test_app/app_drawer.dart';
 import 'package:test_app/app_header.dart';
 import 'package:test_app/products.dart';
+import 'package:test_app/login.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,6 +23,15 @@ class _HomeState extends State<Home> {
       return products;
     }
 
+    if (!LoginApis().isLoggedIn()) {
+// Navigate to the Login page
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const Login()),
+        );
+      });
+      return const SizedBox.shrink(); // Return an empty widget while navigating
+    }
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const AppHeader(title: "home"),
@@ -34,17 +45,15 @@ class _HomeState extends State<Home> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color: const Color.fromARGB(176, 165, 111, 49),
-                boxShadow:[
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    spreadRadius: 5,
-                    blurRadius:7,
-                    offset: const Offset(0,3)
-                  )
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: const Color.fromARGB(176, 165, 111, 49),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3))
+                  ]),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,16 +61,15 @@ class _HomeState extends State<Home> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: const Color.fromARGB(179, 230, 144, 46),
-                      boxShadow: [
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: const Color.fromARGB(179, 230, 144, 46),
+                        boxShadow: [
                           BoxShadow(
                               color: Colors.black.withOpacity(0.4),
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(0, 3))
-                        ]
-                    ),
+                        ]),
                     child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -73,16 +81,15 @@ class _HomeState extends State<Home> {
                   Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: const Color.fromARGB(179, 230, 144, 46),
-                        boxShadow: [
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: const Color.fromARGB(179, 230, 144, 46),
+                          boxShadow: [
                             BoxShadow(
                                 color: Colors.black.withOpacity(0.4),
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, 3))
-                          ]
-                      ),
+                          ]),
                       child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -93,16 +100,15 @@ class _HomeState extends State<Home> {
                   Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: const Color.fromARGB(179, 230, 144, 46),
-                        boxShadow: [
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: const Color.fromARGB(179, 230, 144, 46),
+                          boxShadow: [
                             BoxShadow(
                                 color: Colors.black.withOpacity(0.4),
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, 3))
-                          ]
-                      ),
+                          ]),
                       child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -123,23 +129,22 @@ class _HomeState extends State<Home> {
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                   color: Color.fromARGB(255, 68, 41, 13),
-                  fontFamily:'Times New Roman',
+                  fontFamily: 'Times New Roman',
                 )),
             Container(
               padding: const EdgeInsets.all(20),
               width: Get.width,
               height: 500,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color:const Color.fromARGB(179, 249, 138, 34),
-                boxShadow: [
-                  BoxShadow(
-                      color:Colors.black.withOpacity(0.4),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0,3)
-                )]
-              ),
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: const Color.fromARGB(179, 249, 138, 34),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3))
+                  ]),
               child: FutureBuilder(
                 future: const ProductsApis().getAllProducts(),
                 builder: (BuildContext context,
@@ -157,16 +162,14 @@ class _HomeState extends State<Home> {
                       children: [
                         const Row(
                           children: [
-                             Expanded(
-                                flex: 2,
-                                child:Text("")
-                                ),
+                            Expanded(flex: 2, child: Text("")),
                             Expanded(
-                                flex: 2,
-                                child: Text(
-                                  "Product",
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: Color.fromARGB(255, 60, 14, 225)
-                                )),),
+                              flex: 2,
+                              child: Text("Product",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 60, 14, 225))),
+                            ),
                             Expanded(
                                 flex: 2,
                                 child: Text("Category",
@@ -195,48 +198,68 @@ class _HomeState extends State<Home> {
                           thickness: 3,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 186, 110, 43),
-                              borderRadius: BorderRadius.all(Radius.circular(5))
-                            ),
+                                color: Color.fromARGB(255, 186, 110, 43),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
                             height: screenSize.height * 0.4,
-                           child:ScrollConfiguration( 
-                            behavior: const ScrollBehavior(),
-                            child: ListView(
-                            children: snapshot.data!
-                                  .map((e) => Column(children: [
-                                        Row(
-                                          children: [
-                                            const Expanded(
-                                                flex: 2,
-                                                child: Icon(
-                                                    Icons.add_shopping_cart,color: Color.fromARGB(
-                                                      255, 66, 35, 2),)),
-                                            Expanded(
-                                                flex: 2,
-                                                child: Text("${e['name']}",style: const TextStyle(color: Color.fromARGB(255, 66, 35, 2)),)),
-                                            Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                    "${e['category']["name"]}",style:const TextStyle(color: Color.fromARGB(255, 66, 35, 2)),)),
-                                            Expanded(
-                                                flex: 2,
-                                                child: Text("${e['price']}",style: const TextStyle(color: Color.fromARGB(255, 66, 35, 2)),)),
-                                            Expanded(
-                                                flex: 2,
-                                                child:
-                                                    Text("${e['quantity']}",style: const TextStyle(color: Color.fromARGB(255, 66, 35, 2)),)),
-                                          ],
-                                        ),
-                                        const Divider(
-                                          color:
-                                              Color.fromARGB(255, 59, 59, 59),
-                                          thickness: 1,
-                                        ),
-                                      ]))
-                                  .toList(),
-                            )))
+                            child: Scrollbar(
+                                thumbVisibility: true,
+                                child: ListView(
+                                  children: snapshot.data!
+                                      .map((e) => Column(children: [
+                                            Row(
+                                              children: [
+                                                const Expanded(
+                                                    flex: 2,
+                                                    child: Icon(
+                                                      Icons.add_shopping_cart,
+                                                      color: Color.fromARGB(
+                                                          255, 66, 35, 2),
+                                                    )),
+                                                Expanded(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      "${e['name']}",
+                                                      style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 66, 35, 2)),
+                                                    )),
+                                                Expanded(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      "${e['category']["name"]}",
+                                                      style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 66, 35, 2)),
+                                                    )),
+                                                Expanded(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      "${e['price']}",
+                                                      style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 66, 35, 2)),
+                                                    )),
+                                                Expanded(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      "${e['quantity']}",
+                                                      style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 66, 35, 2)),
+                                                    )),
+                                              ],
+                                            ),
+                                            const Divider(
+                                              color: Color.fromARGB(
+                                                  255, 59, 59, 59),
+                                              thickness: 1,
+                                            ),
+                                          ]))
+                                      .toList(),
+                                )))
                       ],
                     ));
                   }
