@@ -30,14 +30,13 @@ class LoginApis {
         },
         body: token,
       );
-      if (response.statusCode == 200) {
-        print("sucess>>>>>>>>>>>>>>>>>>>>>>>>>");
+      if (response.statusCode == 200){
         return true;
       } else {
 
         return false;
       }
-    } catch (error) {
+    } catch(error) {
       print(error);
       return false;
     }
@@ -50,12 +49,10 @@ class LoginApis {
 
   // Handle login process
   Future<String> Login(Map<String, String> credentials) async {
-    print('username: ${credentials["username"]}');
-    print('password: ${credentials["password"]}');
 
     try {
       final url = '${Variables().domain}/users/login';
-      print("domain: $url");
+
 
       final response = await http.post(
         Uri.parse(url),

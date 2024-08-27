@@ -29,4 +29,24 @@ class ProductsApis {
       throw Exception("Error occurred while trying to fetch");
     }
   }
-}
+  Future<String> createCategory(String name) async {
+    var domain = Variables().domain;
+    final response = await http.post(
+      Uri.parse('$domain/categories/create'),
+      headers:<String,String>{
+        "Content-Type":"application/json; charset=UTF-8"
+        },
+        body: jsonEncode(<String,dynamic>{
+        "name":name,
+        }));
+
+        if(response.statusCode ==200){
+          return "successful";
+    }
+        else{
+          return "Unable to create";
+        }
+  }
+    }
+
+
