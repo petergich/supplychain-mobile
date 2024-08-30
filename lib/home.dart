@@ -143,7 +143,6 @@ class _HomeState extends State<Home> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: Get.width,
-                  height: 500,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     color: const Color.fromARGB(179, 249, 138, 34),
@@ -156,7 +155,8 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  child: FutureBuilder<List<Map<String, dynamic>>>(
+                  child: Expanded(
+                    child: FutureBuilder<List<Map<String, dynamic>>>(
                     future: ProductsApis().getAllProducts(),
                     builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Text("No products available.");
                       } else {
-                        return SingleChildScrollView(
+                        return Expanded(
                           child: Column(
                             children: [
                               const Text(
@@ -240,7 +240,10 @@ class _HomeState extends State<Home> {
                                   color: Color.fromARGB(255, 186, 110, 43),
                                   borderRadius: BorderRadius.all(Radius.circular(5)),
                                 ),
-                                height: screenSize.height * 0.4,
+                                constraints: BoxConstraints(
+                                  minHeight: screenSize.height*0.02, // Minimum height
+                                  maxHeight: screenSize.height*0.4, // Maximum height
+                                ),
                                 child: Scrollbar(
                                   thumbVisibility: true,
                                   child: ListView(
@@ -344,7 +347,7 @@ class _HomeState extends State<Home> {
                         );
                       }
                     },
-                  ),
+                  ),)
                 ),
               ],
             ),
