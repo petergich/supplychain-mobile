@@ -22,5 +22,20 @@ class ApiServices{
       throw Exception("$e");
     }
   }
+  Future<String> deleteSupplier(id) async{
+    try{
+      final response =
+          await http.delete(Uri.parse("${Variables().domain}/suppliers/$id"));
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+
+        return responseBody["message"];
+      } else {
+        return "An error occured while deleting the supplier";
+      }
+    }catch(error){
+      throw Exception("$error");
+    }
+  }
 
 }
