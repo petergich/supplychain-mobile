@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_controller/form_controller.dart';
 import 'package:http/http.dart';
 import 'package:test_app/app_drawer.dart';
 import 'package:test_app/app_header.dart';
@@ -12,6 +14,7 @@ class Suppliers extends StatefulWidget {
 }
 
 class _SuppliersState extends State<Suppliers> {
+  late FormController suppliercontroller;
   // Variable to track the index of the selected row
   int _selectedIndex = -1;
   late Future<List<dynamic>> _suppliersFuture;
@@ -21,9 +24,14 @@ class _SuppliersState extends State<Suppliers> {
       _selectedIndex = index;
     });
   }
+  void initState(){
+    super.initState();
+    suppliercontroller = FormController();
+  }
   void _refreshSuppliers() {
     setState(() {
-      _suppliersFuture = ApiServices().getSuppliers(); // Re-fetch the suppliers
+      _suppliersFuture = ApiServices().getSuppliers();
+      suppliercontroller = FormController();// Re-fetch the suppliers
     });
   }
 
@@ -174,7 +182,45 @@ class _SuppliersState extends State<Suppliers> {
                 icon: const Icon(Icons.delete),
                 label:const Text("delete")),
             const SizedBox(width: 10,),
-            ElevatedButton.icon(onPressed: (){},
+            ElevatedButton.icon(onPressed: (){
+              Navigator.of(context).pop();
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context){
+                    return  AlertDialog(
+                      title: Text("Edit Supplier",textAlign: TextAlign.center,),
+                      content: Container(
+                        child: FormBuilder(child: Container(
+                          child: Column(
+                              children:[
+                                Divider(height: 2,color: Colors.black,),
+                                SizedBox(height: 20,),
+                                
+                                FormBuilderTextField(
+                                  name: "name",
+                                controller: suppliercontroller.controller("name"),
+                               
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "name"
+                                ),),
+                                 FormBuilderTextField(
+                                  name: "Location",
+                                controller: suppliercontroller.controller("Location"),
+                               
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Location"
+                                ),),
+                                
+                              ]),
+                              
+
+                        )),
+                      ),
+                    );
+              });
+            },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,
                     foregroundColor: Colors.white
