@@ -7,7 +7,7 @@ import 'package:test_app/variables.dart';
 class LoginApis {
   final storage = const FlutterSecureStorage();
   bool status = false;
-  final domain ="http://192.168.254.108:8080";
+  final domain ="http://192.168.254.127:8080";
 
   // Check if user is logged in
   Future<bool> isLoggedIn() async {
@@ -82,4 +82,5 @@ class LoginApis {
       return "Error: $e";
     }
   }
+  
 }

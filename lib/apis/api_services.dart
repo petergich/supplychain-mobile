@@ -37,5 +37,18 @@ class ApiServices{
       throw Exception("$error");
     }
   }
-
+  Future<List<dynamic>> getUsers() async{
+    try{final response = await http.get(
+      Uri.parse("${Variables().domain}/users/all"),
+    );
+    if(response.statusCode == 200){
+      final responseBody = jsonDecode(response.body);
+      return responseBody as List<dynamic>;
+    }
+    else{
+      throw Exception(response!=null?response.statusCode: "An error occured");
+    }}catch(error){
+      throw Exception(error as String);
+    }
+  }
 }
