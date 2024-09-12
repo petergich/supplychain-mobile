@@ -66,7 +66,7 @@ class _CustomersState extends State<Customers> {
             const SizedBox(height: 10), // Add spacing between header and list
             Expanded(
               child: FutureBuilder<List<dynamic>>(
-                future: ApiServices().getSuppliers(),
+                future: ApiServices().getCustomers(),
                 builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -96,7 +96,7 @@ class _CustomersState extends State<Customers> {
                             children: [
                               Expanded(flex: 2, child: Text("Name", style: TextStyle(color: Colors.black, fontSize: 24))),
                               Expanded(flex: 2, child: Text("Phone", style: TextStyle(color: Colors.black, fontSize: 24))),
-                              Expanded(flex: 2, child: Text("Location", style: TextStyle(color: Colors.black, fontSize: 24))),
+                              Expanded(flex: 2, child: Text("Orders", style: TextStyle(color: Colors.black, fontSize: 24))),
                             ],
                           ),
                         ),

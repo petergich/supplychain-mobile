@@ -22,6 +22,22 @@ class ApiServices{
       throw Exception("$e");
     }
   }
+  Future<List<dynamic>> getCustomers() async{
+    try{
+      final response = await http.get(
+        Uri.parse("$domain/customer/all"),
+      );
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        final suppliers = responseBody;
+        return suppliers as List<dynamic>;
+      } else {
+        throw Exception("An error occurred with code: ${response.statusCode}");
+      }
+    }catch(e){
+      throw Exception("$e");
+    }
+  }
   Future<String> deleteSupplier(id) async{
     try{
       final response =
@@ -51,4 +67,5 @@ class ApiServices{
       throw Exception(error as String);
     }
   }
+
 }
