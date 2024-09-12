@@ -7,12 +7,11 @@ import 'package:test_app/variables.dart';
 class LoginApis {
   final storage = const FlutterSecureStorage();
   bool status = false;
-  final domain ="http://192.168.254.132:8080";
+  final domain ="http://192.168.254.197:8080";
 
   // Check if user is logged in
   Future<bool> isLoggedIn() async {
     var token = await getToken();
-    print(token);
     return await validateToken(token);
   }
 
@@ -38,8 +37,7 @@ class LoginApis {
         return false;
       }
     } catch(error) {
-      print(error);
-      return false;
+          return false;
     }
   }
 
